@@ -2,10 +2,16 @@ import { Request, Response } from "express";
 const fetch = require('node-fetch');
 
 class IndexController {
+
     public async index(req: Request, res: Response) {
+      let user=req.params.user;
+
+      const fs = require("fs");
+      let text = "Something you want to write in";
+      
+      
       let img: string[] = ['https://design.duolingo.com/e69974f04b05dcf07f2a.svg', 'https://design.duolingo.com/6b59833e80abfee5a4e0.svg', 'https://design.duolingo.com/60aa5cd702b56a7a5e6b.svg','https://design.duolingo.com/cb98bfddd80fe680632d.svg', 'https://design.duolingo.com/0cafa0617837e6c7b204.svg', 'https://design.duolingo.com/61ed15447ba714a5e160.svg'];
       let imgDef=img[Math.floor(Math.random() * img.length)];
-      let user=req.params.user;
       let url=`https://www.duolingo.com/2017-06-30/users?username=${user}`;
       fetch(url)
       .then((response: { json: () => any; }) => response.json())
@@ -188,11 +194,17 @@ class IndexController {
 
 
     `;
+    fs.writeFileSync(`./public/img/${user}.svg`, html, function(err: any){
+      if(err){
+        return console.log("error");
+      }
+      })
         res.set('Content-Type', 'text/html');
         res.send(Buffer.from(html));
-      }).catch((error: any) => {
-        res.send("");
-      });
+      })
+      // .catch((error: any) => {
+      //   res.send("");
+      // });
 
 
     }
