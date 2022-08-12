@@ -202,9 +202,9 @@ class IndexController {
         res.set('Content-Type', 'text/html');
         res.send(Buffer.from(html));
       })
-      // .catch((error: any) => {
-      //   res.send("");
-      // });
+      .catch((error: any) => {
+        res.send("");
+      });
 
 
     }
